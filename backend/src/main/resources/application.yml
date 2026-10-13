@@ -1,0 +1,54 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${COOKIE_SECURE:false}
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./data/costez;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE}
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USER:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${SMTP_TLS:true}
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
+management:
+  health:
+    mail:
+      enabled: ${MAIL_ENABLED:false}
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+costez:
+  base-url: ${BASE_URL:http://localhost:8080}
+  seed-demo: ${SEED_DEMO:true}
+  demo-password: ${DEMO_PASSWORD:CostezDemo2026!}
+  mail-enabled: ${MAIL_ENABLED:false}
+  mail-from: ${MAIL_FROM:costez@example.com}
+  allow-registration: ${ALLOW_REGISTRATION:true}
+logging:
+  level:
+    root: INFO
